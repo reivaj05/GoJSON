@@ -52,6 +52,18 @@ func (wrapper *JSONWrapper) GetInt64() (int64, bool) {
 	return value, ok
 }
 
+// GetUIntFromPath Returns an uint from the path passed as parameter
+func (wrapper *JSONWrapper) GetUIntFromPath(path string) (uint, bool) {
+	value, ok := wrapper.ct.Path(path).Data().(uint)
+	return value, ok
+}
+
+// GetUInt Returns an int64 from the current object
+func (wrapper *JSONWrapper) GetUInt() (uint, bool) {
+	value, ok := wrapper.ct.Data().(uint)
+	return value, ok
+}
+
 // GetFloatFromPath Returns a float from the path passed as parameter
 func (wrapper *JSONWrapper) GetFloatFromPath(path string) (float64, bool) {
 	value, ok := wrapper.ct.Path(path).Data().(float64)
@@ -100,13 +112,13 @@ func (wrapper *JSONWrapper) CopyJSONObjectFromPath(path string) *JSONWrapper {
 
 // GetArrayFromPath Returns an array from the path passed as parameter
 func (wrapper *JSONWrapper) GetArrayFromPath(path string) []*JSONWrapper {
-	array, _ := wrapper.ct.Path(path).Children()
+	array := wrapper.ct.Path(path).Children()
 	return createArrayWrapper(array)
 }
 
 // GetArray Returns an array from the current object
 func (wrapper *JSONWrapper) GetArray() []*JSONWrapper {
-	array, _ := wrapper.ct.Children()
+	array := wrapper.ct.Children()
 	return createArrayWrapper(array)
 }
 
